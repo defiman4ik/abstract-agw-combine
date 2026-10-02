@@ -87,7 +87,7 @@ Designed specifically for accounts created via standard EVM wallets (MetaMask / 
 
 ```bash
 # Clone repository
-git clone https://github.com/defitools-lab/abstract-agw-combine.git
+git clone https://github.com/defiman4ik/abstract-agw-combine.git
 cd abstract-agw-combine
 
 # Install Node.js dependencies (Required for AGW Client & Viem)

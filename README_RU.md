@@ -87,7 +87,7 @@
 
 ```bash
 # Клонирование репозитория
-git clone https://github.com/defitools-lab/abstract-agw-combine.git
+git clone https://github.com/defiman4ik/abstract-agw-combine.git
 cd abstract-agw-combine
 
 # Установка зависимостей Node.js (обязательно для AGW Client и Viem)
