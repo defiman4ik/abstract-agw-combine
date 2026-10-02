@@ -1,10 +1,10 @@
 # ==============================================================================
 #                       EVM RECIPIENTS CONFIGURATION
 # ==============================================================================
-# Використовується при налаштуванні в settings.py: RECIPIENT_MODE = "FROM_FILE"
-# Вкажіть цільові EVM адреси для виведення коштів (по одній на рядок).
-# Порядок відповідає номерам акаунтів (рядок 1 -> акаунт 1, рядок 2 -> акаунт 2).
+# Used when RECIPIENT_MODE = "FROM_FILE" in settings.py.
+# Specify target EVM addresses for ETH withdrawals (one address per line).
+# Order maps 1-to-1 to accounts (line 1 -> account 1, line 2 -> account 2).
 #
-# Приклад:
+# Examples:
 # 0x0000000000000000000000000000000000000001
 # 0x0000000000000000000000000000000000000002

@@ -87,15 +87,16 @@
 
 ```bash
 # Клонування репозиторію
-git clone https://github.com/your-username/abstract-agw-bot.git
-cd abstract-agw-bot
+git clone https://github.com/defitools-lab/abstract-agw-combine.git
+cd abstract-agw-combine
 
-# Встановлення залежностей Node.js
+# Встановлення залежностей Node.js (обов'язково для AGW Client та Viem)
 npm install
 
 # Встановлення залежностей Python
 pip install -r requirements.txt
 ```
+> 💡 *Підказка для Windows*: Якщо PowerShell блокує виконання скриптів, запустіть `npm.cmd install`.
 
 ### 3. Конфігурація акаунтів
 

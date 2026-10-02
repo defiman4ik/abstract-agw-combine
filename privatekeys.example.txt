@@ -1,25 +1,25 @@
 # ==============================================================================
 #                      ABSTRACT WALLET ACCOUNTS CONFIGURATION
 # ==============================================================================
-# Підтримувані формати запису (по одному акаунту на рядок):
+# Supported account formats (one account per line):
 #
-# ФОРМАТ 1 (Рекомендований для прогріву з депозитом з EVM):
-#   номер:EVM_приватний_ключ:AGW_Signer_приватний_ключ
-#   Приклад:
+# FORMAT 1 (Recommended when EVM master and AGW Signer keys differ):
+#   ID:EVM_PRIVATE_KEY:SIGNER_PRIVATE_KEY
+#   Example:
 #   1:0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef:0xabcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789
 #   2:0x123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0:0xbcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789a
 #
-# ФОРМАТ 2 (Якщо використовується один приватний ключ для EVM та AGW):
-#   номер:приватний_ключ
-#   Приклад:
+# FORMAT 2 (If using a single private key for both EVM and AGW):
+#   ID:PRIVATE_KEY
+#   Example:
 #   1:0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
 #
-# ФОРМАТ 3 (Тільки приватний ключ):
+# FORMAT 3 (Plain private key only):
 #   0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
 #
 # ------------------------------------------------------------------------------
-# ℹ️ ДОВІДКА:
-# - EVM_приватний_ключ: експортується з вашого звичайного MetaMask/Rabby.
-# - AGW_Signer_приватний_ключ: експортується на https://portal.abs.xyz через
-#   налаштування профілю (Settings -> Embedded Wallet -> Export Private Key)
-#   або через LocalStorage браузера (F12 -> Application -> Local Storage).
+# ℹ️ GUIDE:
+# - EVM_PRIVATE_KEY: Exported from your standard MetaMask / Rabby wallet.
+# - AGW_SIGNER_PRIVATE_KEY: Exported from https://portal.abs.xyz via
+#   profile settings (Settings -> Embedded Wallet -> Export Private Key)
+#   or via browser storage (F12 -> Application -> Local Storage).

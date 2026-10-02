@@ -103,11 +103,11 @@ TRANSLATIONS = {
 }
 
 def get_current_language() -> str:
-    lang = getattr(settings, "LANGUAGE", "UA")
+    lang = getattr(settings, "LANGUAGE", "EN")
     if not isinstance(lang, str):
-        return "UA"
+        return "EN"
     lang_upper = lang.strip().upper()
-    return lang_upper if lang_upper in TRANSLATIONS else "UA"
+    return lang_upper if lang_upper in TRANSLATIONS else "EN"
 
 def set_current_language(lang: str) -> None:
     lang_upper = lang.strip().upper()
@@ -117,11 +117,11 @@ def set_current_language(lang: str) -> None:
 def t(key: str, **kwargs) -> str:
     """Translates a message key according to the active language setting."""
     lang = get_current_language()
-    dict_for_lang = TRANSLATIONS.get(lang, TRANSLATIONS["UA"])
+    dict_for_lang = TRANSLATIONS.get(lang, TRANSLATIONS["EN"])
     text = dict_for_lang.get(key)
     if text is None:
-        # Fallback to English or Ukrainian
-        text = TRANSLATIONS["EN"].get(key, TRANSLATIONS["UA"].get(key, key))
+        # Fallback to English
+        text = TRANSLATIONS["EN"].get(key, key)
     if kwargs:
         try:
             return text.format(**kwargs)

@@ -1,5 +1,5 @@
 # ==============================================================================
-#                      ABSTRACT (AGW) MANAGER SETTINGS
+#                      ABSTRACT (AGW) COMBINE SETTINGS
 # ==============================================================================
 
 # RPC Configuration
@@ -11,7 +11,7 @@ EXPLORER_TX_URL = "https://abscan.org/tx/"
 MULTICALL3_ADDRESS = "0xF9cDA624FBC7e059355ce98a31693d299FACd963"
 
 # Gas & Safety Reserve (ETH to leave on account for tx fees)
-# Можна вказати фіксоване число (наприклад, 0.00025) або діапазон для рандомізації [мін, макс]
+# Can be a fixed number (e.g. 0.005) or a randomized range [min, max]
 GAS_RESERVE_ETH = [0.007, 0.015]
 
 # Minimum token balance USD value to swap (avoids wasting gas on negligible dust)
@@ -20,15 +20,18 @@ MIN_SWAP_VALUE_USD = 0.05
 # Slippage tolerance in percentage (e.g. 1.0 = 1%)
 SLIPPAGE_PERCENT = 1.0
 
-# Рандомні паузи в секундах [min, max]
-SLEEP_BETWEEN_ACTIONS = [10, 20]            # пауза між діями всередині акаунта (наприклад, між свапом і виведенням)
-SLEEP_BETWEEN_ACCOUNTS = [600, 1800]         # рандомна пауза між акаунтами для транзакцій (свапи, прогрів, upvote) [мін, макс]
-SLEEP_BETWEEN_ACCOUNTS_SCAN = [20, 30]         # окрема швидка пауза між акаунтами для режиму 1 (сканування та звіт) [мін, макс]
+# Random delays in seconds [min, max]
+SLEEP_BETWEEN_ACTIONS = [10, 20]            # pause between actions within single account (e.g. swap -> withdraw)
+SLEEP_BETWEEN_ACCOUNTS = [600, 1800]         # pause between different accounts for transactions [min, max]
+SLEEP_BETWEEN_ACCOUNTS_SCAN = [20, 30]       # fast pause between accounts in Mode 1 (balance scanner) [min, max]
 
-# Interface language / Мова інтерфейсу / Язык интерфейса: "UA" | "EN" | "RU"
-LANGUAGE = "UA"
+# Interface language: "EN" (English - Default) | "UA" (Ukrainian) | "RU" (Russian)
+LANGUAGE = "EN"
 
-# Shuffle account order
+# Proxy usage toggle: True = use proxies from proxies.txt, False = direct connection
+USE_PROXIES = True
+
+# Shuffle account order for transaction modes (Scan mode always runs sequentially 1..N)
 SHUFFLE_ACCOUNTS = True
 
 # Recipient Mode for ETH withdrawal:

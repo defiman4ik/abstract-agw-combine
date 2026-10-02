@@ -87,15 +87,16 @@ Designed specifically for accounts created via standard EVM wallets (MetaMask / 
 
 ```bash
 # Clone repository
-git clone https://github.com/your-username/abstract-agw-bot.git
-cd abstract-agw-bot
+git clone https://github.com/defitools-lab/abstract-agw-combine.git
+cd abstract-agw-combine
 
-# Install Node.js dependencies
+# Install Node.js dependencies (Required for AGW Client & Viem)
 npm install
 
 # Install Python dependencies
 pip install -r requirements.txt
 ```
+> 💡 *Note for Windows users*: If PowerShell blocks npm script execution, use `npm.cmd install`.
 
 ### 3. Account Configuration
 
