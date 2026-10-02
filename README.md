@@ -5,148 +5,153 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-brightgreen.svg)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 
-Повноцінний професійний комбайн для автоматизації взаємодії зі смарт-гаманцями **Abstract Global Wallet (AGW)** на базі мережі **Abstract Mainnet** ([portal.abs.xyz](https://portal.abs.xyz/)).
+[🇬🇧 English](README.md) | [🇺🇦 Українська](README_UA.md) | [🇷🇺 Русский](README_RU.md)
 
-Розроблено спеціально для акаунтів, створених через звичайні EVM-гаманці (MetaMask / Rabby / приватні ключі) з використанням офіційного SDK `@abstract-foundation/agw-client` та стандарту **Native Account Abstraction (EIP-712)**.
+A comprehensive, all-in-one automation tool for **Abstract Global Wallet (AGW)** smart contract accounts on **Abstract Mainnet** ([portal.abs.xyz](https://portal.abs.xyz/)).
+
+Designed specifically for accounts created via standard EVM wallets (MetaMask / Rabby / Private Keys) utilizing the official `@abstract-foundation/agw-client` SDK and **Native Account Abstraction (EIP-712)** standard.
 
 ---
 
-## 🌟 Можливості та Режими роботи
+## 🌟 Features & Operation Modes
 
 ```text
 ================================================================
          ABSTRACT GLOBAL WALLET (AGW) AUTOMATION BOT            
         Account Abstraction • Warmup • Swapper • Upvote        
 ================================================================
-[?] Виберіть режим роботи:
- > 1. 📊 Сканувати акаунти (Баланси AGW, EOA, токени та ліквідність)
-   2. 💧 Зняти ліквідність з протоколів (Aborean, KONA, Sakura Swap)
-   3. 🔄 Обміняти всі токени в ETH (Swap to ETH + Unwrap WETH)
-   4. 💸 Вивести ETH на EVM-гаманці (Withdraw to EVM)
-   5. ⚡ Повний цикл (Зняти ліквідність -> Обмін токенів в ETH -> Вивід ETH на EVM)
-   6. 🔥 Прогрів акаунтів (Депозит з EVM -> Свап -> Створення LP -> Стейкінг)
-   7. ⭐ Щоденний Upvote (Підтримка стріку на portal.abs.xyz)
-   8. 🚪 Вихід
+[?] Select operation mode:
+ > 1. 📊 Scan accounts (AGW & EOA balances, tokens, liquidity)
+   2. 💧 Remove liquidity from protocols (Aborean, KONA, Sakura Swap)
+   3. 🔄 Swap all tokens to ETH (Swap to ETH + Unwrap WETH)
+   4. 💸 Withdraw ETH to EVM wallets (Withdraw to EVM)
+   5. ⚡ Full cycle (Remove liquidity -> Swap to ETH -> Withdraw to EVM)
+   6. 🔥 Warmup accounts (EVM Deposit -> Swap -> Create LP -> Stake)
+   7. ⭐ Daily Upvote (Keep streak on portal.abs.xyz)
+   8. 🌐 Change language / Змінити мову / Сменить язык
+   9. 🚪 Exit
 ```
 
-### 1. 📊 Сканування акаунтів (Checker & Analytics)
-- Детермінований розрахунок або пряме визначення адрес смарт-контрактів AGW.
-- Через **Multicall3** в один виклик перевіряє:
-  - Баланси нативного ETH на AGW та EOA.
-  - Баланси стейкінгового `absETH`.
-  - Токени екосистеми (`WETH`, `USDC`, `USDT`, `gtBTC`, `KONA`, `PEARL`, `PENGU` тощо).
-  - Залочену ліквідність у DEX-пулах.
-  - Поточний стрік голосування (**Upvote Streak**) та статус чи проголосовано сьогодні на [portal.abs.xyz](https://portal.abs.xyz/rewards).
-- Виводить кольорову зведену таблицю в консоль та автоматично експортує стилізований звіт у **Excel (.xlsx)** до папки `reports/`.
+### 1. 📊 Scan Accounts (Checker & Analytics)
+- Deterministic calculation and resolution of AGW smart account addresses.
+- Single-request inspection via **Multicall3**:
+  - Native ETH balances on both AGW and EOA signer accounts.
+  - Staked `absETH` balances.
+  - Ecosystem tokens (`WETH`, `USDC`, `USDT`, `gtBTC`, `KONA`, `PEARL`, `PENGU`, etc.).
+  - Locked liquidity positions across supported DEX pools.
+  - Daily voting status & current **Upvote Streak** from [portal.abs.xyz](https://portal.abs.xyz/rewards).
+- Beautiful colored summary table printed directly to console and exported to styled **Excel (.xlsx)** reports in `reports/`.
 
-### 2. 💧 Зняття ліквідності (Liquidity Remover)
-- Автоматично перевіряє залочені кошти в протоколах:
+### 2. 💧 Remove Liquidity (Liquidity Remover)
+- Automatically scans and claims locked positions from:
   - **Aborean DEX**
   - **KONA Protocol**
   - **Sakura Swap**
-- Виконує claim накопичених комісій та зняття ліквідності назад на баланс AGW.
+- Collects trading fees and safely returns all liquidity to the AGW balance.
 
-### 3. 🔄 Обмін токенів в ETH (Token Swapper)
-- **WETH -> ETH**: миттєвий unwrap 1:1 через офіційний контракт WETH без комісій агрегаторів та без slippage.
-- **ERC-20 -> ETH**: автоматичний вибір маршрутів через DEX-агрегатор **Relay API**, виконання approve та свапів.
+### 3. 🔄 Swap All Tokens to ETH (Token Swapper)
+- **WETH -> ETH**: Instant 1:1 unwrapping via the native WETH contract without DEX routing fees or slippage.
+- **ERC-20 -> ETH**: Optimal liquidity routing via **Relay API**, handling approvals and atomic swaps.
 
-### 4. 💸 Виведення ETH на EVM (Withdraw to EVM)
-- Розраховує доступний баланс ETH за вирахуванням динамічного безпечного резерву газу (`GAS_RESERVE_ETH`).
-- Переказ на EVM-гаманець підписанта (`SAME_AS_EOA`) або на індивідуальні адреси з `recipients.txt`.
+### 4. 💸 Withdraw ETH to EVM Wallets (Withdraw to EVM)
+- Computes liquid ETH balance while reserving a configurable safety gas buffer (`GAS_RESERVE_ETH`).
+- Transfers funds to the signer's own EVM address (`SAME_AS_EOA`) or dedicated recipient addresses from `recipients.txt` (`FROM_FILE`).
 
-### 5. ⚡ Повний цикл (Full Cycle)
-- Автоматичний комбінований пайплайн для очищення акаунтів:
-  `Зняття ліквідності -> Обмін усіх знайдених токенів в ETH -> Виведення ETH на EVM`.
+### 5. ⚡ Full Clean Cycle (Full Cycle)
+- Automated multi-step cleanup pipeline per account:
+  `Remove Liquidity -> Swap all tokens to ETH -> Withdraw remaining ETH to EVM`.
 
-### 6. 🔥 Прогрів акаунтів (Warmup Engine)
-- Гнучка модульна система прогріву:
-  - Автоматичний депозит необхідної суми з EVM на AGW (якщо баланс < 0.01 ETH).
-  - Свап ETH у вибраний токен (`USDC`, `gtBTC` тощо).
-  - Додавання ліквідності у пару **Kona V2 LP** (автоматичний розрахунок пропорцій і approve).
-  - Стейкінг отриманих LP-токенів у **Kona Farm** для нарахування поїнтів та винагород.
-  - Підтримка режимів: `CUSTOM` (вибір дій) або `RANDOM` (рандомізація сценаріїв для Sybil-захисту).
+### 6. 🔥 Warmup Accounts (Warmup Engine)
+- Flexible modular activity engine:
+  - Automatic top-up deposit from EVM to AGW if balance is below threshold (< 0.01 ETH).
+  - Swap ETH to selected target token (`USDC`, `gtBTC`, etc.).
+  - Add liquidity to **Kona V2 LP** pool with auto-calculated ratios and approvals.
+  - Stake LP tokens into **Kona Farm** for yield and reward points.
+  - Modes: `CUSTOM` (preset steps) or `RANDOM` (randomized activity patterns for Sybil resistance).
 
-### 7. ⭐ Щоденний Upvote (Daily Vote & Streak Keeper)
-- Взаємодіє з офіційним смарт-контрактом `0x3B50dE27506f0a8C1f4122A1e6F470009a76ce2A` через виклик `voteForApp(uint256 appId) payable`.
-- Перевіряє статус голосування та актуальний стрік через backend API portal.abs.xyz.
-- Якщо акаунт уже голосував сьогодні — пропускає його без витрат газу.
-- Обирає випадковий додаток із топ-10 активних додатків екосистеми Abstract (`UPVOTE_APP_IDS`).
-- Підтримує **автономний нескінченний цикл (`UPVOTE_LOOP = True`)**: після завершення кола акаунтів софт обчислює точний час до початку нового дня, засинає за таймером і автоматично продовжує голосування наступного дня.
+### 7. ⭐ Daily Upvote (Daily Vote & Streak Keeper)
+- Direct on-chain interaction with official contract `0x3B50dE27506f0a8C1f4122A1e6F470009a76ce2A` via `voteForApp(uint256 appId) payable`.
+- Queries backend API to check eligibility and vote streak, skipping accounts that already voted today.
+- Votes for random verified top-10 ecosystem apps (`UPVOTE_APP_IDS`).
+- **Autonomous Continuous Daily Loop (`UPVOTE_LOOP = True`)**: automatically calculates remaining seconds until next epoch/day, sleeps, and resumes voting automatically.
 
----
-
-## 🛡️ Безпека та Anti-Sybil механізми
-- **Стабільна прив'язка проксі**: кожен акаунт закріплений за своєю проксі 1-до-1, що запобігає змішуванню IP при рандомізації.
-- **Роздільні затримки**:
-  - `SLEEP_BETWEEN_ACCOUNTS`: тривалі затримки між транзакціями (наприклад, 10–30 хв).
-  - `SLEEP_BETWEEN_ACCOUNTS_SCAN`: швидка пауза для інформаційного сканування (20–30 сек).
-- **Рандомізація черги (`SHUFFLE_ACCOUNTS`)**:
-  - Транзакційні режими перемішують порядок акаунтів для уникнення кластеризації.
-  - Режим сканування завжди зберігає строгий порядок 1..N для зручного моніторингу.
-- **Динамічний резерв газу (`GAS_RESERVE_ETH`)**: запобігає спустошенню балансів «під нуль».
+### 8. 🌐 Multi-Language Support (i18n)
+- Switch language on the fly right inside the interactive menu or via `settings.py` (`LANGUAGE = "EN"` / `"UA"` / `"RU"`).
 
 ---
 
-## 📦 Встановлення та налаштування
+## 🛡️ Anti-Sybil & Safety Features
+- **1-to-1 Static Proxy Binding**: each account is permanently bound to a designated proxy from `proxies.txt` to prevent IP cross-contamination during shuffling.
+- **Dedicated Delay Profiles**:
+  - `SLEEP_BETWEEN_ACCOUNTS`: long random delays between transactions (e.g. 10–30 min).
+  - `SLEEP_BETWEEN_ACCOUNTS_SCAN`: fast pauses for balance checks (20–30 sec).
+- **Execution Order Control (`SHUFFLE_ACCOUNTS`)**:
+  - Transaction modes randomize execution order to avoid clustering.
+  - Scan mode strictly preserves sequential order (1..N) for consistent reporting.
+- **Dynamic Gas Reserves (`GAS_RESERVE_ETH`)**: randomized reserves prevent accounts from being completely drained.
 
-### 1. Системні вимоги
-- **Python**: версія `3.10` або вище.
-- **Node.js**: версія `18.x` або вище.
+---
 
-### 2. Клонування та встановлення залежностей
+## 📦 Installation & Setup
+
+### 1. Requirements
+- **Python**: version `3.10` or higher.
+- **Node.js**: version `18.x` or higher.
+
+### 2. Clone & Install Dependencies
 
 ```bash
-# Клонування репозиторію
+# Clone repository
 git clone https://github.com/your-username/abstract-agw-bot.git
 cd abstract-agw-bot
 
-# Встановлення залежностей Node.js
+# Install Node.js dependencies
 npm install
 
-# Встановлення залежностей Python
+# Install Python dependencies
 pip install -r requirements.txt
 ```
 
-### 3. Конфігурація акаунтів
+### 3. Account Configuration
 
-Створіть файл `privatekeys.txt` на основі `privatekeys.example.txt`:
+Create `privatekeys.txt` based on `privatekeys.example.txt`:
 
 ```text
-# Формат: ID:EVM_PRIVATE_KEY:SIGNER_PRIVATE_KEY
+# Format: ID:EVM_PRIVATE_KEY:SIGNER_PRIVATE_KEY
 1:0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef:0xabcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789
 2:0x123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0:0xbcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789a
 ```
-*(Також підтримується формат одного ключа `ID:PRIVATE_KEY` або просто приватний ключ).*
+*(Single key format `ID:PRIVATE_KEY` or plain private keys are also supported).*
 
-### 4. Конфігурація проксі
+### 4. Proxy Configuration
 
-Створіть файл `proxies.txt` на основі `proxies.example.txt`:
+Create `proxies.txt` based on `proxies.example.txt`:
 
 ```text
 http://username:password@ip:port
 socks5://username:password@ip:port
 ```
 
-### 5. Налаштування параметрів
+### 5. Settings Configuration
 
-Відкрийте `settings.py` та налаштуйте необхідні параметри:
-- `GAS_RESERVE_ETH`: діапазон залишку ETH на газ (наприклад, `[0.007, 0.015]`).
-- `SLEEP_BETWEEN_ACCOUNTS`: затримка між транзакціями акаунтів.
-- `WARMUP_MODE`, `DO_SWAP`, `CREATE_LP`, `STAKE_FARM`: налаштування прогріву.
-- `UPVOTE_LOOP`: безперервний щоденний цикл голосування.
+Open `settings.py` and configure parameters to your preference:
+- `LANGUAGE`: default interface language (`"EN"`, `"UA"`, or `"RU"`).
+- `GAS_RESERVE_ETH`: gas reserve range (e.g. `[0.007, 0.015]`).
+- `SLEEP_BETWEEN_ACCOUNTS`: pause range between account transactions.
+- `WARMUP_MODE`, `DO_SWAP`, `CREATE_LP`, `STAKE_FARM`: warmup strategy.
+- `UPVOTE_LOOP`: continuous daily voting loop.
 
 ---
 
-## 🚀 Запуск
+## 🚀 Usage
 
 ```bash
 python main.py
 ```
 
-У терміналі з'явиться інтерактивне меню зі списком усіх режимів. Керування здійснюється стрілками `↑` / `↓` та клавішею `Enter`.
+An interactive menu will guide you through all available modes using keyboard arrow keys `↑` / `↓` and `Enter`.
 
 ---
 
-## 📄 Ліцензія
-Цей проект розповсюджується під ліцензією [MIT](LICENSE).
-Використовуйте на власний розсуд. Завжди дотримуйтесь безпеки власних приватних ключів!
+## 📄 License
+Distributed under the [MIT](LICENSE) License. Use at your own discretion. Always keep your private keys secure!
