@@ -25,6 +25,9 @@ SLEEP_BETWEEN_ACTIONS = [10, 20]            # пауза між діями вс�
 SLEEP_BETWEEN_ACCOUNTS = [600, 1800]         # рандомна пауза між акаунтами для транзакцій (свапи, прогрів, upvote) [мін, макс]
 SLEEP_BETWEEN_ACCOUNTS_SCAN = [20, 30]         # окрема швидка пауза між акаунтами для режиму 1 (сканування та звіт) [мін, макс]
 
+# Interface language / Мова інтерфейсу / Язык интерфейса: "UA" | "EN" | "RU"
+LANGUAGE = "UA"
+
 # Shuffle account order
 SHUFFLE_ACCOUNTS = True
 

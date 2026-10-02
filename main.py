@@ -9,13 +9,14 @@ from modules.withdrawer import EthWithdrawer
 from modules.liquidity import LiquidityRemover
 from modules.warmup import WarmupEngine
 from modules.upvote import UpvoteManager
+from modules.i18n import t, get_current_language, set_current_language
 import settings
 
 def get_execution_accounts(accounts):
     acc_list = list(accounts)
     if getattr(settings, "SHUFFLE_ACCOUNTS", False):
         random.shuffle(acc_list)
-        logger.info(f"Порядок виконання {len(acc_list)} акаунтів перемішано (SHUFFLE_ACCOUNTS = True).")
+        logger.info(t("shuffled_msg", count=len(acc_list)))
     return acc_list
 
 def check_accounts_mode(accounts):
@@ -203,6 +204,24 @@ def upvote_mode(accounts):
     except KeyboardInterrupt:
         logger.info("\n🛑 Upvote mode stopped by user (Ctrl+C). Returning to main menu.")
 
+def change_language_mode():
+    lang_questions = [
+        inquirer.List(
+            "lang",
+            message=t("select_language"),
+            choices=[
+                ("🇺🇦 Українська (UA)", "UA"),
+                ("🇬🇧 English (EN)", "EN"),
+                ("🇷🇺 Русский (RU)", "RU"),
+            ],
+            default=get_current_language(),
+        )
+    ]
+    ans = inquirer.prompt(lang_questions)
+    if ans and "lang" in ans:
+        set_current_language(ans["lang"])
+        logger.success(t("lang_switched"))
+
 def main():
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
@@ -254,27 +273,28 @@ def main():
 
     logger.success(f"Initialized {len(accounts)} AGW account(s) successfully.")
 
-    questions = [
-        inquirer.List(
-            "mode",
-            message="Виберіть режим роботи",
-            choices=[
-                ("1. 📊 Сканувати акаунти (Баланси AGW, EOA, токени та ліквідність)", "scan"),
-                ("2. 💧 Зняти ліквідність з протоколів (Aborean, KONA, Sakura Swap)", "liquidity"),
-                ("3. 🔄 Обміняти всі токени в ETH (Swap to ETH + Unwrap WETH)", "swap"),
-                ("4. 💸 Вивести ETH на EVM-гаманці (Withdraw to EVM)", "withdraw"),
-                ("5. ⚡ Повний цикл (Зняти ліквідність -> Обмін токенів в ETH -> Вивід ETH на EVM)", "full"),
-                ("6. 🔥 Прогрів акаунтів (Депозит з EVM -> Свап -> Створення LP -> Стейкінг)", "warmup"),
-                ("7. ⭐ Щоденний Upvote (Підтримка стріку на portal.abs.xyz)", "upvote"),
-                ("8. 🚪 Вихід", "exit"),
-            ],
-        )
-    ]
-
     while True:
+        questions = [
+            inquirer.List(
+                "mode",
+                message=t("menu_title"),
+                choices=[
+                    (t("menu_scan"), "scan"),
+                    (t("menu_liquidity"), "liquidity"),
+                    (t("menu_swap"), "swap"),
+                    (t("menu_withdraw"), "withdraw"),
+                    (t("menu_full"), "full"),
+                    (t("menu_warmup"), "warmup"),
+                    (t("menu_upvote"), "upvote"),
+                    (t("menu_lang"), "lang"),
+                    (t("menu_exit"), "exit"),
+                ],
+            )
+        ]
+
         answers = inquirer.prompt(questions)
         if not answers or answers["mode"] == "exit":
-            logger.info("Роботу завершено.")
+            logger.info(t("work_finished"))
             break
 
         mode = answers["mode"]
@@ -292,6 +312,8 @@ def main():
             warmup_mode(accounts)
         elif mode == "upvote":
             upvote_mode(accounts)
+        elif mode == "lang":
+            change_language_mode()
 
         print("\n")
 
