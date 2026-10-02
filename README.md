@@ -123,6 +123,24 @@ Create `privatekeys.txt` based on `privatekeys.example.txt`:
 ```
 *(Single key format `ID:PRIVATE_KEY` or plain private keys are also supported).*
 
+#### 🔑 What are EVM Key and Signer Key, and where to get them?
+1. **EVM Private Key (EOA)**:
+   - The standard private key of your master EVM wallet (MetaMask, Rabby, etc.).
+   - **Purpose**: Used for funding your smart account (EVM -> AGW deposit in `Warmup` mode) and as the default recipient address for withdrawals.
+   - **Where to get**: Inside your wallet app (MetaMask: *Account details -> Show private key*).
+
+2. **AGW Signer Private Key (Smart Account Signer)**:
+   - Because **AGW (Abstract Global Wallet)** is a smart contract account (Account Abstraction EIP-712), transactions on its behalf are authorized by a designated signer key.
+   - **Option 1 (Single key for both roles)**:
+     - If your AGW account is authorized directly with your EOA key, you can provide the same key twice or use the simplified format `1:PRIVATE_KEY`.
+   - **Option 2 (Export from portal.abs.xyz)**:
+     - Log in to [portal.abs.xyz](https://portal.abs.xyz) with your wallet.
+     - Go to your account / wallet settings (**Settings / Security**).
+     - In the embedded wallet section (Privy / Embedded Wallet), select **"Export Private Key"** and save the key securely.
+   - **Option 3 (Via browser storage F12)**:
+     - Open Developer Tools (`F12`) on `portal.abs.xyz` -> navigate to `Application` -> `Local Storage` -> `https://portal.abs.xyz`.
+     - Authorized session and signer data are stored under keys labeled `privy:...`.
+
 ### 4. Proxy Configuration
 
 Create `proxies.txt` based on `proxies.example.txt`:
