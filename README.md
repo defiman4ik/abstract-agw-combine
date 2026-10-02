@@ -4,6 +4,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-green.svg)](https://www.python.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-brightgreen.svg)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
+[![Telegram](https://img.shields.io/badge/Telegram-@defiman4ik-2CA5E0?style=flat&logo=telegram&logoColor=white)](https://t.me/defiman4ik)
 
 [🇬🇧 English](README.md) | [🇺🇦 Українська](README_UA.md) | [🇷🇺 Русский](README_RU.md)
 
@@ -154,6 +155,13 @@ python main.py
 ```
 
 An interactive menu will guide you through all available modes using keyboard arrow keys `↑` / `↓` and `Enter`.
+
+---
+
+## 💬 Community & Feedback
+
+Have ideas, feature requests, or questions regarding the project? Feel free to reach out:
+- **Telegram**: [@defiman4ik](https://t.me/defiman4ik)
 
 ---
 

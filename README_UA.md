@@ -4,6 +4,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-green.svg)](https://www.python.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-brightgreen.svg)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
+[![Telegram](https://img.shields.io/badge/Telegram-@defiman4ik-2CA5E0?style=flat&logo=telegram&logoColor=white)](https://t.me/defiman4ik)
 
 [🇬🇧 English](README.md) | [🇺🇦 Українська](README_UA.md) | [🇷🇺 Русский](README_RU.md)
 
@@ -153,6 +154,13 @@ python main.py
 ```
 
 У терміналі з'явиться інтерактивне меню зі списком усіх режимів. Керування здійснюється стрілками `↑` / `↓` та клавішею `Enter`.
+
+---
+
+## 💬 Зворотній зв'язок та пропозиції
+
+Маєте запитання, побажання щодо нових функцій або знайшли баг? Звертайтеся:
+- **Telegram**: [@defiman4ik](https://t.me/defiman4ik)
 
 ---
 
