@@ -18,8 +18,8 @@ def short_addr(addr: str) -> str:
 def get_account_label(acc, idx: int, total: int) -> str:
     acc_id = getattr(acc, "account_id", None) or idx
     evm_addr = short_addr(getattr(acc, "evm_address", None) or getattr(acc, "signer_address", ""))
-    agw_addr = short_addr(getattr(acc, "agw_address", ""))
-    return f"[{idx}/{total}] Account #{acc_id} | EVM: {evm_addr} (AGW: {agw_addr})"
+    agw_addr = getattr(acc, "agw_address", "")
+    return f"[{idx}/{total}] Account #{acc_id} | AGW: {agw_addr} (EVM: {evm_addr})"
 
 def get_execution_accounts(accounts):
     acc_list = list(accounts)
