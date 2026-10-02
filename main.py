@@ -7,8 +7,6 @@ from modules.checker import BalanceChecker
 from modules.swapper import TokenSwapper
 from modules.withdrawer import EthWithdrawer
 from modules.liquidity import LiquidityRemover
-from modules.warmup import WarmupEngine
-from modules.upvote import UpvoteManager
 from modules.i18n import t, get_current_language, set_current_language
 import settings
 
@@ -143,67 +141,6 @@ def full_cycle_mode(accounts):
 
     logger.success("Full cycle completed for all accounts.")
 
-def warmup_mode(accounts):
-    accounts = get_execution_accounts(accounts)
-    warmup = WarmupEngine()
-    logger.info(f"Starting WARMUP for {len(accounts)} account(s)...")
-
-    for idx, acc in enumerate(accounts, 1):
-        logger.info(f"\n{'=' * 60}")
-        logger.info(f"[{idx}/{len(accounts)}] WARMUP for AGW: {acc.agw_address}")
-        logger.info(f"{'=' * 60}")
-
-        try:
-            warmup.run_warmup_for_account(acc)
-        except Exception as e:
-            logger.error(f"Error during warmup on {acc.agw_address}: {e}")
-
-        if idx < len(accounts):
-            sleeping(settings.SLEEP_BETWEEN_ACCOUNTS, "пауза між акаунтами")
-
-    logger.success("Warmup completed for all accounts.")
-
-def upvote_mode(accounts):
-    manager = UpvoteManager()
-    loop_enabled = getattr(settings, "UPVOTE_LOOP", True)
-    cycle_num = 1
-
-    try:
-        while True:
-            logger.info(f"\n{'=' * 60}")
-            loop_msg = " [DAILY AUTO-LOOP ON]" if loop_enabled else ""
-            logger.info(f"🚀 Starting UPVOTE Cycle #{cycle_num} for {len(accounts)} account(s)...{loop_msg}")
-            logger.info(f"{'=' * 60}")
-
-            acc_list = list(accounts)
-            if getattr(settings, "SHUFFLE_ACCOUNTS", False):
-                random.shuffle(acc_list)
-                logger.info("Accounts order shuffled for this cycle.")
-
-            for idx, acc in enumerate(acc_list, 1):
-                logger.info(f"\n[{idx}/{len(acc_list)}] UPVOTE for AGW: {acc.agw_address}")
-                try:
-                    manager.upvote_account(acc)
-                except Exception as e:
-                    logger.error(f"Error during upvote on {acc.agw_address}: {e}")
-
-                if idx < len(acc_list):
-                    sleeping(settings.SLEEP_BETWEEN_ACCOUNTS, "пауза між акаунтами")
-
-            logger.success(f"✨ Cycle #{cycle_num} completed for all {len(acc_list)} accounts.")
-
-            if not loop_enabled:
-                break
-
-            # Calculate sleep until next voting window opens
-            first_agw = acc_list[0].agw_address
-            wait_seconds = manager.get_seconds_until_next_day(first_agw)
-            cycle_num += 1
-            manager.sleep_until_next_round(wait_seconds)
-
-    except KeyboardInterrupt:
-        logger.info("\n🛑 Upvote mode stopped by user (Ctrl+C). Returning to main menu.")
-
 def change_language_mode():
     lang_questions = [
         inquirer.List(
@@ -284,8 +221,6 @@ def main():
                     (t("menu_swap"), "swap"),
                     (t("menu_withdraw"), "withdraw"),
                     (t("menu_full"), "full"),
-                    (t("menu_warmup"), "warmup"),
-                    (t("menu_upvote"), "upvote"),
                     (t("menu_lang"), "lang"),
                     (t("menu_exit"), "exit"),
                 ],
@@ -308,10 +243,6 @@ def main():
             withdraw_eth_mode(accounts)
         elif mode == "full":
             full_cycle_mode(accounts)
-        elif mode == "warmup":
-            warmup_mode(accounts)
-        elif mode == "upvote":
-            upvote_mode(accounts)
         elif mode == "lang":
             change_language_mode()
 

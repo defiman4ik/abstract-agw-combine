@@ -18,7 +18,7 @@ Designed specifically for accounts created via standard EVM wallets (MetaMask / 
 ```text
 ================================================================
          ABSTRACT GLOBAL WALLET (AGW) AUTOMATION BOT            
-        Account Abstraction • Warmup • Swapper • Upvote        
+        Account Abstraction • Liquidity • Swapper • Bridge      
 ================================================================
 [?] Select operation mode:
  > 1. 📊 Scan accounts (AGW & EOA balances, tokens, liquidity)
@@ -26,10 +26,8 @@ Designed specifically for accounts created via standard EVM wallets (MetaMask / 
    3. 🔄 Swap all tokens to ETH (Swap to ETH + Unwrap WETH)
    4. 💸 Withdraw ETH to EVM wallets (Withdraw to EVM)
    5. ⚡ Full cycle (Remove liquidity -> Swap to ETH -> Withdraw to EVM)
-   6. 🔥 Warmup accounts (EVM Deposit -> Swap -> Create LP -> Stake)
-   7. ⭐ Daily Upvote (Keep streak on portal.abs.xyz)
-   8. 🌐 Change language / Змінити мову / Сменить язык
-   9. 🚪 Exit
+   6. 🌐 Change language / Змінити мову / Сменить язык
+   7. 🚪 Exit
 ```
 
 ### 1. 📊 Scan Accounts (Checker & Analytics)
@@ -39,7 +37,6 @@ Designed specifically for accounts created via standard EVM wallets (MetaMask / 
   - Staked `absETH` balances.
   - Ecosystem tokens (`WETH`, `USDC`, `USDT`, `gtBTC`, `KONA`, `PEARL`, `PENGU`, etc.).
   - Locked liquidity positions across supported DEX pools.
-  - Daily voting status & current **Upvote Streak** from [portal.abs.xyz](https://portal.abs.xyz/rewards).
 - Beautiful colored summary table printed directly to console and exported to styled **Excel (.xlsx)** reports in `reports/`.
 
 ### 2. 💧 Remove Liquidity (Liquidity Remover)
@@ -61,22 +58,10 @@ Designed specifically for accounts created via standard EVM wallets (MetaMask / 
 - Automated multi-step cleanup pipeline per account:
   `Remove Liquidity -> Swap all tokens to ETH -> Withdraw remaining ETH to EVM`.
 
-### 6. 🔥 Warmup Accounts (Warmup Engine)
-- Flexible modular activity engine:
-  - Automatic top-up deposit from EVM to AGW if balance is below threshold (< 0.01 ETH).
-  - Swap ETH to selected target token (`USDC`, `gtBTC`, etc.).
-  - Add liquidity to **Kona V2 LP** pool with auto-calculated ratios and approvals.
-  - Stake LP tokens into **Kona Farm** for yield and reward points.
-  - Modes: `CUSTOM` (preset steps) or `RANDOM` (randomized activity patterns for Sybil resistance).
-
-### 7. ⭐ Daily Upvote (Daily Vote & Streak Keeper)
-- Direct on-chain interaction with official contract `0x3B50dE27506f0a8C1f4122A1e6F470009a76ce2A` via `voteForApp(uint256 appId) payable`.
-- Queries backend API to check eligibility and vote streak, skipping accounts that already voted today.
-- Votes for random verified top-10 ecosystem apps (`UPVOTE_APP_IDS`).
-- **Autonomous Continuous Daily Loop (`UPVOTE_LOOP = True`)**: automatically calculates remaining seconds until next epoch/day, sleeps, and resumes voting automatically.
-
-### 8. 🌐 Multi-Language Support (i18n)
+### 6. 🌐 Multi-Language Support (i18n)
 - Switch language on the fly right inside the interactive menu or via `settings.py` (`LANGUAGE = "EN"` / `"UA"` / `"RU"`).
+
+> 🚀 **Upcoming Feature**: Advanced Warmup Engine and Daily Upvote Streak Keeper are currently in development on the `feature/warmup-upvote` branch and scheduled for the next release!
 
 ---
 

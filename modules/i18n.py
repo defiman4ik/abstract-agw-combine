@@ -12,10 +12,10 @@ TRANSLATIONS = {
         "menu_swap": "3. 🔄 Обміняти всі токени в ETH (Swap to ETH + Unwrap WETH)",
         "menu_withdraw": "4. 💸 Вивести ETH на EVM-гаманці (Withdraw to EVM)",
         "menu_full": "5. ⚡ Повний цикл (Зняти ліквідність -> Обмін токенів в ETH -> Вивід ETH на EVM)",
-        "menu_warmup": "6. 🔥 Прогрів акаунтів (Депозит з EVM -> Свап -> Створення LP -> Стейкінг)",
-        "menu_upvote": "7. ⭐ Щоденний Upvote (Підтримка стріку на portal.abs.xyz)",
-        "menu_lang": "8. 🌐 Змінити мову / Change language / Сменить язык",
-        "menu_exit": "9. 🚪 Вихід",
+        "menu_warmup": "🔥 Прогрів акаунтів (Депозит з EVM -> Свап -> Створення LP -> Стейкінг)",
+        "menu_upvote": "⭐ Щоденний Upvote (Підтримка стріку на portal.abs.xyz)",
+        "menu_lang": "6. 🌐 Змінити мову / Change language / Сменить язык",
+        "menu_exit": "7. 🚪 Вихід",
         
         # Мовний вибір
         "select_language": "Оберіть мову інтерфейсу",
@@ -44,10 +44,10 @@ TRANSLATIONS = {
         "menu_swap": "3. 🔄 Swap all tokens to ETH (Swap to ETH + Unwrap WETH)",
         "menu_withdraw": "4. 💸 Withdraw ETH to EVM wallets (Withdraw to EVM)",
         "menu_full": "5. ⚡ Full cycle (Remove liquidity -> Swap to ETH -> Withdraw to EVM)",
-        "menu_warmup": "6. 🔥 Warmup accounts (EVM Deposit -> Swap -> Create LP -> Stake)",
-        "menu_upvote": "7. ⭐ Daily Upvote (Keep streak on portal.abs.xyz)",
-        "menu_lang": "8. 🌐 Change language / Змінити мову / Сменить язык",
-        "menu_exit": "9. 🚪 Exit",
+        "menu_warmup": "🔥 Warmup accounts (EVM Deposit -> Swap -> Create LP -> Stake)",
+        "menu_upvote": "⭐ Daily Upvote (Keep streak on portal.abs.xyz)",
+        "menu_lang": "6. 🌐 Change language / Змінити мову / Сменить язык",
+        "menu_exit": "7. 🚪 Exit",
 
         # Language selection
         "select_language": "Select interface language",
@@ -76,10 +76,10 @@ TRANSLATIONS = {
         "menu_swap": "3. 🔄 Обменять все токены в ETH (Swap to ETH + Unwrap WETH)",
         "menu_withdraw": "4. 💸 Вывести ETH на EVM-кошельки (Withdraw to EVM)",
         "menu_full": "5. ⚡ Полный цикл (Снять ликвидность -> Обмен токенов в ETH -> Вывод ETH на EVM)",
-        "menu_warmup": "6. 🔥 Прогрев аккаунтов (Депозит с EVM -> Свап -> Создание LP -> Стейкинг)",
-        "menu_upvote": "7. ⭐ Ежедневный Upvote (Поддержание стрика на portal.abs.xyz)",
-        "menu_lang": "8. 🌐 Сменить язык / Change language / Змінити мову",
-        "menu_exit": "9. 🚪 Выход",
+        "menu_warmup": "🔥 Прогрев аккаунтов (Депозит с EVM -> Свап -> Создание LP -> Стейкинг)",
+        "menu_upvote": "⭐ Ежедневный Upvote (Поддержание стрика на portal.abs.xyz)",
+        "menu_lang": "6. 🌐 Сменить язык / Change language / Змінити мову",
+        "menu_exit": "7. 🚪 Выход",
 
         # Выбор языка
         "select_language": "Выберите язык интерфейса",
