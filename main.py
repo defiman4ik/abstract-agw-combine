@@ -10,6 +10,17 @@ from modules.liquidity import LiquidityRemover
 from modules.i18n import t, get_current_language, set_current_language
 import settings
 
+def short_addr(addr: str) -> str:
+    if not addr or len(addr) < 10:
+        return str(addr or "")
+    return f"{addr[:6]}...{addr[-4:]}"
+
+def get_account_label(acc, idx: int, total: int) -> str:
+    acc_id = getattr(acc, "account_id", None) or idx
+    evm_addr = short_addr(getattr(acc, "evm_address", None) or getattr(acc, "signer_address", ""))
+    agw_addr = short_addr(getattr(acc, "agw_address", ""))
+    return f"[{idx}/{total}] Account #{acc_id} | EVM: {evm_addr} (AGW: {agw_addr})"
+
 def get_execution_accounts(accounts):
     acc_list = list(accounts)
     if getattr(settings, "SHUFFLE_ACCOUNTS", False):
@@ -24,11 +35,11 @@ def check_accounts_mode(accounts):
     logger.info(f"Scanning {len(accounts)} account(s) in sequential order (SHUFFLE_ACCOUNTS = False for scan)...")
     for idx, acc in enumerate(accounts, 1):
         try:
-            logger.info(f"[{idx}/{len(accounts)}] Scanning AGW: {acc.agw_address} (Signer: {acc.signer_address})...")
+            logger.info(f"{get_account_label(acc, idx, len(accounts))} | Scanning...")
             scan = checker.scan_account(acc)
             scans.append(scan)
         except Exception as e:
-            logger.error(f"Error scanning account {acc.signer_address}: {e}")
+            logger.error(f"Error scanning {get_account_label(acc, idx, len(accounts))}: {e}")
 
         if idx < len(accounts):
             sleep_scan = getattr(settings, "SLEEP_BETWEEN_ACCOUNTS_SCAN", [1, 3])
@@ -44,18 +55,18 @@ def swap_tokens_mode(accounts):
     logger.info(f"Starting token swaps for {len(accounts)} account(s)...")
 
     for idx, acc in enumerate(accounts, 1):
-        logger.info(f"\n[{idx}/{len(accounts)}] Account AGW: {acc.agw_address}")
+        logger.info(f"\n{get_account_label(acc, idx, len(accounts))}")
         try:
             scan = checker.scan_account(acc)
             active_tokens = [t for t in scan["agw_tokens"] if t["raw_balance"] > 0 and t.get("balance", 0) >= 0.000001]
             if not active_tokens:
-                logger.info(f"No tokens to swap on AGW {acc.agw_address}")
+                logger.info(f"No tokens to swap on AGW {short_addr(acc.agw_address)}")
             else:
                 logger.info(f"Found {len(active_tokens)} token(s) to swap.")
                 swapper.swap_all_tokens(acc, active_tokens)
 
         except Exception as e:
-            logger.error(f"Error during swap on {acc.agw_address}: {e}")
+            logger.error(f"Error during swap on {short_addr(acc.agw_address)}: {e}")
 
         if idx < len(accounts):
             sleeping(settings.SLEEP_BETWEEN_ACCOUNTS, "пауза між акаунтами")
@@ -68,12 +79,12 @@ def withdraw_eth_mode(accounts):
     logger.info(f"Starting ETH withdrawals for {len(accounts)} account(s)...")
 
     for idx, acc in enumerate(accounts, 1):
-        logger.info(f"\n[{idx}/{len(accounts)}] Processing withdrawal for AGW: {acc.agw_address}")
+        logger.info(f"\n{get_account_label(acc, idx, len(accounts))} | Processing withdrawal...")
         try:
             acc_idx = (int(acc.account_id) - 1) if (getattr(acc, "account_id", None) and str(acc.account_id).isdigit()) else (idx - 1)
             withdrawer.withdraw_agw_eth(acc, account_index=acc_idx)
         except Exception as e:
-            logger.error(f"Error during withdrawal on {acc.agw_address}: {e}")
+            logger.error(f"Error during withdrawal on {short_addr(acc.agw_address)}: {e}")
 
         if idx < len(accounts):
             sleeping(settings.SLEEP_BETWEEN_ACCOUNTS, "пауза між акаунтами")
@@ -86,11 +97,11 @@ def remove_liquidity_mode(accounts):
     logger.info(f"Starting liquidity removal for {len(accounts)} account(s)...")
 
     for idx, acc in enumerate(accounts, 1):
-        logger.info(f"\n[{idx}/{len(accounts)}] Processing liquidity removal for AGW: {acc.agw_address}")
+        logger.info(f"\n{get_account_label(acc, idx, len(accounts))} | Processing liquidity removal...")
         try:
             remover.remove_all_liquidity(acc)
         except Exception as e:
-            logger.error(f"Error removing liquidity on {acc.agw_address}: {e}")
+            logger.error(f"Error removing liquidity on {short_addr(acc.agw_address)}: {e}")
 
         if idx < len(accounts):
             sleeping(settings.SLEEP_BETWEEN_ACCOUNTS, "пауза між акаунтами")
@@ -107,7 +118,7 @@ def full_cycle_mode(accounts):
 
     for idx, acc in enumerate(accounts, 1):
         logger.info(f"\n{'=' * 60}")
-        logger.info(f"[{idx}/{len(accounts)}] FULL CYCLE for AGW: {acc.agw_address}")
+        logger.info(f"{get_account_label(acc, idx, len(accounts))} [FULL CYCLE]")
         logger.info(f"{'=' * 60}")
 
         try:
@@ -134,7 +145,7 @@ def full_cycle_mode(accounts):
             withdrawer.withdraw_agw_eth(acc, account_index=acc_idx)
 
         except Exception as e:
-            logger.error(f"Error during full cycle on {acc.agw_address}: {e}")
+            logger.error(f"Error during full cycle on {short_addr(acc.agw_address)}: {e}")
 
         if idx < len(accounts):
             sleeping(settings.SLEEP_BETWEEN_ACCOUNTS, "пауза між акаунтами")

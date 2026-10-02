@@ -46,6 +46,8 @@ class AgwAccount:
 
         if self.evm_address:
             self.evm_address = Web3.to_checksum_address(self.evm_address)
+        else:
+            self.evm_address = self.signer_address
 
     def _call_executor(self, command: str, *args) -> Dict[str, Any]:
         script_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "agw_executor.mjs")
