@@ -76,7 +76,9 @@ def swap_tokens_mode(accounts):
 def withdraw_eth_mode(accounts):
     accounts = get_execution_accounts(accounts)
     withdrawer = EthWithdrawer()
-    logger.info(f"Starting ETH withdrawals for {len(accounts)} account(s)...")
+    mode = getattr(settings, "WITHDRAW_MODE", "TRANSFER").upper()
+    mode_desc = f"Bridge to CEX ({', '.join(getattr(settings, 'BRIDGE_TARGET_CHAINS', ['BASE']))})" if mode == "BRIDGE_CEX" else "EVM Transfer"
+    logger.info(f"Starting ETH withdrawals [Mode: {mode_desc}] for {len(accounts)} account(s)...")
 
     for idx, acc in enumerate(accounts, 1):
         logger.info(f"\n{get_account_label(acc, idx, len(accounts))} | Processing withdrawal...")
@@ -139,8 +141,10 @@ def full_cycle_mode(accounts):
             else:
                 logger.info("No tokens to swap.")
 
-            # 3. Withdraw ETH to EVM
-            logger.info("Step 3/3: Withdrawing ETH...")
+            # 3. Withdraw or Bridge ETH
+            withdraw_mode = getattr(settings, "WITHDRAW_MODE", "TRANSFER").upper()
+            action_desc = "Step 3/3: Bridging ETH to CEX..." if withdraw_mode == "BRIDGE_CEX" else "Step 3/3: Withdrawing ETH to EVM..."
+            logger.info(action_desc)
             acc_idx = (int(acc.account_id) - 1) if (getattr(acc, "account_id", None) and str(acc.account_id).isdigit()) else (idx - 1)
             withdrawer.withdraw_agw_eth(acc, account_index=acc_idx)
 

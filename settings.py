@@ -34,10 +34,22 @@ USE_PROXIES = True
 # Shuffle account order for transaction modes (Scan mode always runs sequentially 1..N)
 SHUFFLE_ACCOUNTS = True
 
-# Recipient Mode for ETH withdrawal:
+# ==============================================================================
+#                      WITHDRAWAL & BRIDGE SETTINGS
+# ==============================================================================
+# Withdrawal mode from AGW:
+# "TRANSFER"   -> Direct ETH transfer inside Abstract network (to EOA or recipient from recipients.txt)
+# "BRIDGE_CEX" -> Direct bridge from AGW to CEX exchange deposit addresses via Relay.link (Base / Arb / OP)
+WITHDRAW_MODE = "BRIDGE_CEX"
+
+# List of target networks for bridging to CEX (randomly selected per account):
+# Supported networks: "BASE", "ARBITRUM", "OPTIMISM", "LINEA", "POLYGON"
+BRIDGE_TARGET_CHAINS = ["BASE", "ARBITRUM", "OPTIMISM"]
+
+# Recipient Mode for internal transfer (when WITHDRAW_MODE = "TRANSFER"):
 # "SAME_AS_EOA" -> Withdraws ETH to the account's own EVM signer address
 # "FROM_FILE"   -> Reads 1-to-1 matching recipient addresses from recipients.txt
-RECIPIENT_MODE = "SAME_AS_EOA"
+RECIPIENT_MODE = "FROM_FILE"
 
 # ==============================================================================
 #               ECOSYSTEM CONFIG (TOKENS, CONTRACTS, PROTOCOLS)
